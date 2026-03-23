@@ -1,0 +1,28 @@
+# Vision Language Model (VLM)
+
+How does AI understand both images and text at the same time?
+
+CLIP solves this.
+
+CLIP is an OpenAI model know as Contrastive Language-Image Pretraining model.
+
+CLIP is a Multimodal that processes both Image(vision) + language(text). It is trained at internet scale with image-caption pairs. It has zero shot capabilities of which no training data is needed for many classification tasks.
+
+It uses Contrastive Learning which takes an image as input and embeds into vector by vision encoder. Similarly, for the language, the text encoder takes text as input and produces a vector as an output.
+This vector is referred as an embedding. Both these image and language vectors are in same size. Hence they have shared embedding space and is close together.
+
+For a network to understand whether two things (image and text) are similar are not, in this case we have cosine similarity. If the cosine angle of the vectors is zero then those two vectors are completely aligned and the cosine similarity will be close to 1. If the cosine angle between two vectors is 90 then those two vectors are not aligned. Hence the cosine similarity will be 0. 
+
+Below image shows that text encoder produces embedding [T1, T2, T3, …, TN] and Image Encoder produces embedding [I1, I2, I3, …, IN]
+
+￼
+
+While training, we have loss that is the sum of image to text loss and text to image loss and by using feedback mechanism, the losses are minimized by modifying the weights of the model.
+
+Training loss = image to text loss + text to image loss
+
+
+As CLIP is trained with internet data, it’s not suitable for fine grained tasks. For example, If two images has birds, this model cannot identify the name of the birds.
+
+
+
