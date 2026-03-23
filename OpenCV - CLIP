@@ -15,7 +15,7 @@ For a network to understand whether two things (image and text) are similar are 
 
 Below image shows that text encoder produces embedding [T1, T2, T3, …, TN] and Image Encoder produces embedding [I1, I2, I3, …, IN]
 
-￼![Encoders](Encoders.png)
+￼![Encoders](https://github.com/krishnasmv/VisionLanguageModel-VLM-/blob/main/Encoders.png)
 
 While training, we have loss that is the sum of image to text loss and text to image loss and by using feedback mechanism, the losses are minimized by modifying the weights of the model.
 
