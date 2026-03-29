@@ -371,7 +371,7 @@
         "colab_type": "text"
       },
       "source": [
-        "<a href=\"https://colab.research.google.com/github/krishnasmv/VisionLanguageModel-VLM/blob/main/Embeddings.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+        "<a href=\"https://colab.research.google.com/github/krishnasmv/VisionLanguageModel-VLM/blob/main/Embeddings.json\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
       ]
     },
     {
@@ -494,7 +494,8 @@
       ],
       "metadata": {
         "colab": {
-          "base_uri": "https://localhost:8080/"
+          "base_uri": "https://localhost:8080/",
+          "height": 0
         },
         "id": "9A9kSJXn-TpK",
         "outputId": "a5daeaf4-eb18-4fe9-ef76-d22ff9656220"
@@ -531,7 +532,8 @@
       ],
       "metadata": {
         "colab": {
-          "base_uri": "https://localhost:8080/"
+          "base_uri": "https://localhost:8080/",
+          "height": 0
         },
         "id": "X7IBi7Y4F1nv",
         "outputId": "6b860704-ae10-43e4-a4d2-e4c2e4d6d15a"
