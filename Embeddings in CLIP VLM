@@ -1,0 +1,20 @@
+How does the clip model create embeddings for both image and text and finds similarity?
+
+In short using CLIPTokenizer, CLIPProcessor and CLIPModel libraries.
+
+-> In this scenario I used CLIP-VIT-base-patch32 model which is a base Vision Transformer (VIT) model.
+
+-> CLIPTokenizer takes a text string and spits into tokens or words that are represented as series of numbers. Tokenizer returns the vector of numbers which is equivalent to maximum length of the vector string. In CLIP the vector size is 512. 
+
+-> Tokens do not have semantic meaning Where as the embeddings which is of fixed length vector calculated from these tokenized vectors. They have Symantec meaning. 
+
+-> We can use cosine similarity to calculate the distance between two vectors which is dot product of A and B divided by magnitude  of A times B. 
+Cosine similarity = a.b/|a||b|
+
+-> To calculate the clip embeddings and to display similarity, we need to make sure they are in right format and need to be normalized. The pixel values ranges from 0 to 255 that needs to be normalized between 0 and 1 and the brightness needs to be average to ensure the image is invariant to brightness. To make this we remove the mean it becomes the brightness invariant and when it’s divided by standard deviation it becomes contrast invariant.
+
+The clip processor library takes care of this transformation.
+
+Now this is ready to get image features and cosine similarity.
+
+Is this enough to find similarity? We just found Image similarity. We need to calculate the image and text similarity. Eg: image of donut and the text of the image ‘a donut’
