@@ -1,0 +1,19 @@
+Zero Shot classification.
+
+Before diving into this, lets see what is the problem of image classification.
+
+In image classification, the input is an image and output is one of the known class labels (eg: cat, dog, other). If the neural network is trained properly then network output vector that represents probability should all add up to 1. 
+
+Now, If you have to add an additional classification label for example an elephant, you need to gather thousands of the elephant images and train the neural network all over again to classify with new category which takes time.
+
+Imagine that if you didn’t have to do any of that but making a one line of code change that enables you to classify a new classifier. That is what enabled by CLIP. Thats what zero shot means and you did not give a single example.
+
+Once the inputs are tokenized, those processed inputs need attention so the model focus on the relevant parts as the tokens have padding that should not be considered.
+
+Now we obtain cosine similarities for image and text. Once we extract image-text scores, we scale it as clip doesn’t do well with -1 to 1 scores.
+
+As these scores are not probabilities, we need to convert these scores to probabilities. To do this, we use softmax. This is a function that converts a vector of raw scores into probabilities that sum to 1.
+
+This probability helps the model to determine the class of an input. Throught this process we didn’t train the model since this is a LLM that has already trained with large data set and knows the part of vision language and has an understanding as we combined the vision part with text.
+
+What do you need to do if you want to add a new classifier example an elephant in this case ? Just add a target variable elephant in the output class. Just out of the box it becomes a classifier with new target. Thats why’s it’s called zero shot image classifier.
