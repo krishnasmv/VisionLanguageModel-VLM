@@ -1,21 +1,27 @@
 export async function POST(req) {
-  const { image_base64, task } = await req.json();
-  const REPLICATE_TOKEN = process.env.REPLICATE_API_KEY;
-
-  if (!REPLICATE_TOKEN) {
-    return Response.json({ error: "Missing REPLICATE_API_KEY" }, { status: 400 });
-  }
-
-  if (!image_base64 || !task) {
-    return Response.json({ error: "Missing image_base64 or task" }, { status: 400 });
-  }
-
   try {
+    const { image_base64, task } = await req.json();
+    const REPLICATE_TOKEN = process.env.REPLICATE_API_KEY;
+
+    console.log('REPLICATE_TOKEN exists:', !!REPLICATE_TOKEN);
+    console.log('Task:', task);
+
+    if (!REPLICATE_TOKEN) {
+      console.log('ERROR: Missing REPLICATE_API_KEY');
+      return Response.json({ error: "Missing REPLICATE_API_KEY" }, { status: 400 });
+    }
+
+    if (!image_base64 || !task) {
+      console.log('ERROR: Missing image_base64 or task');
+      return Response.json({ error: "Missing image_base64 or task" }, { status: 400 });
+    }
+
     const prompt = task === 'caption' 
       ? 'Generate a short caption for this image.' 
       : 'Summarize what you see in this image.';
 
-    // Create prediction
+    console.log('Creating Replicate prediction...');
+
     const createResponse = await fetch("https://api.replicate.com/v1/predictions", {
       method: "POST",
       headers: {
@@ -31,13 +37,21 @@ export async function POST(req) {
       }),
     });
 
+    console.log('Replicate response status:', createResponse.status);
     const prediction = await createResponse.json();
-    const predictionId = prediction.id;
+    console.log('Prediction:', prediction);
 
-    // Poll for completion
+    if (!prediction.id) {
+      console.log('ERROR: No prediction ID returned');
+      return Response.json({ error: `Failed to create prediction: ${JSON.stringify(prediction)}` }, { status: 500 });
+    }
+
+    const predictionId = prediction.id;
     let result = prediction;
     let attempts = 0;
+
     while (result.status === "processing" && attempts < 60) {
+      console.log(`Polling attempt ${attempts + 1}...`);
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const statusResponse = await fetch(`https://api.replicate.com/v1/predictions/${predictionId}`, {
@@ -45,8 +59,11 @@ export async function POST(req) {
       });
       
       result = await statusResponse.json();
+      console.log('Poll result:', result.status);
       attempts++;
     }
+
+    console.log('Final result:', result);
 
     if (result.status === "succeeded") {
       return Response.json({ output: result.output });
