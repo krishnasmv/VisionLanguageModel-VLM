@@ -19,6 +19,8 @@ export async function POST(req) {
 
     console.log('Creating Replicate prediction with BLIP...');
 
+    
+
     const createResponse = await fetch("https://api.replicate.com/v1/predictions", {
       method: "POST",
       headers: {
@@ -26,9 +28,10 @@ export async function POST(req) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        version: "4b32f57b9181c2035526242b4526bb13020ee6db1515be374a31b580249370c1",
+        version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
         input: {
           image: `data:image/jpeg;base64,${image_base64}`,
+          caption: true,
         },
       }),
     });
