@@ -1,6 +1,6 @@
 {
   "functions": {
-    "app/api/**/*.js": {
+    "app/api/clip/route.js": {
       "maxDuration": 60
     }
   }
