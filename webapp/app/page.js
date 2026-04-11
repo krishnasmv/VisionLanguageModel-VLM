@@ -23,43 +23,48 @@ export default function Home() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!image) {
-      setError('Please upload an image');
-      return;
-    }
+  e.preventDefault();
+  if (!image) {
+    setError('Please upload an image');
+    return;
+  }
 
-    setLoading(true);
-    setError('');
-    setResult('');
+  setLoading(true);
+  setError('');
+  setResult('');
 
-    try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64 = reader.result.split(',')[1];
+  try {
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64 = reader.result.split(',')[1];
+      console.log('Sending request...');
 
-        const res = await fetch('/api/clip', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image_base64: base64, task }),
-        });
+      const res = await fetch('/api/clip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image_base64: base64, task }),
+      });
 
-        if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(errorData.error || 'API error');
-        }
+      console.log('Response status:', res.status);
+      const data = await res.json();
+      console.log('Response data:', data);
 
-        const data = await res.json();
-        const output = data.output?.[0] || data.output || JSON.stringify(data);
-        setResult(output);
-      };
-      reader.readAsDataURL(image);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (!res.ok) {
+        throw new Error(data.error || 'API error');
+      }
+
+      const output = data.output?.[0] || data.output || JSON.stringify(data);
+      console.log('Output:', output);
+      setResult(output);
+    };
+    reader.readAsDataURL(image);
+  } catch (err) {
+    console.error('Error:', err);
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div style={{ maxWidth: '700px', margin: '50px auto', fontFamily: 'sans-serif', padding: '20px' }}>
