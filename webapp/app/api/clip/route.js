@@ -23,7 +23,7 @@ export async function POST(req) {
     console.log('Calling HuggingFace API...');
 
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-VL-7B-Instruct",
+      "https://router.huggingface.co/models/Qwen/Qwen2.5-VL-7B-Instruct",
       {
         headers: { Authorization: `Bearer ${HF_TOKEN}` },
         method: "POST",
