@@ -1,28 +1,48 @@
-# VisionLanguageModel-VLM
+# CLIP on Vercel + HuggingFace (Free)
 
-CLIP-Based Image–Text Embedding and Similarity System
+## Quick Start
 
-# Overview
+### 1. Get HuggingFace Token
+- Go to https://huggingface.co/settings/tokens
+- Create a new **User Access Token** (read permission is fine)
+- Copy the token
 
-This project implements a multimodal embedding pipeline using CLIP to encode images and text into a shared vector space. It enables semantic similarity search, zero-shot classification, and cross-modal retrieval.
+### 2. Setup Locally
+```bash
+npm install
+export HUGGINGFACE_API_KEY="hf_your_token_here"
+npm run dev
+```
+Visit http://localhost:3000
 
-# Capabilities
+### 3. Deploy to Vercel
+```bash
+npm install -g vercel
+vercel
+```
+- When prompted, add `HUGGINGFACE_API_KEY` environment variable in Vercel dashboard
+- Or set it during deployment:
+```bash
+vercel env add HUGGINGFACE_API_KEY
+```
 
-Image–text similarity scoring
-Text-based image retrieval
-Zero-shot classification
-Embedding generation for downstream tasks
-Batch inference support
+### 4. Done
+Your app is live at `https://your-project.vercel.app`
 
-# Architecture
+## How It Works
+- Frontend: Next.js React app on Vercel (free tier)
+- Backend: Next.js API route → HuggingFace Inference API
+- Model: OpenAI CLIP ViT-Base (runs on HuggingFace servers)
+- Cost: $0 (both have free tiers)
 
-Components:
+## Limits
+- HuggingFace free tier: ~30 requests/minute
+- Vercel free tier: unlimited function calls (on Hobby plan)
+- Each inference takes 1-3 seconds
 
-Text Encoder → Transformer-based encoder
-Image Encoder → Vision Transformer (ViT)
-Projection Layer → Maps both modalities into shared embedding space
-Similarity Function → Cosine similarity
+## Test Image URL
+```
+https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/tasks/image-classification-task.png
+```
 
-# Model used:
-
-CLIP ViT-B/32
+Try labels: `dog, cat, bird`
